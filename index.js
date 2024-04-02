@@ -42,7 +42,7 @@ app.use(express.json());
 
 app.get('/cars', async function(req, res) {
   try {
-    const [data] = await req.db.query(`SELECT id, make, model, year FROM Cars WHERE deleted_flag = false`)
+    const [data] = await req.db.query(`SELECT id, make, model, year FROM Cars WHERE deleted_flag = 0`)
     
     res.json({success: true, data: data})
   } catch (err) {
@@ -50,16 +50,6 @@ app.get('/cars', async function(req, res) {
     res.json({success: false, err: err})
   }
 });
-
-// app.use(async function(req, res, next) {
-//   try {
-  
-//     await next();
-
-//   } catch (err) {
-
-//   }
-// });
 
 app.post('/car', async function(req, res) {
   try {
@@ -76,9 +66,9 @@ app.post('/car', async function(req, res) {
         deleted
       }
     );
-    res.json({ success: true, message: 'Car successfully created', data: null });
+    res.json({ success: true, message: 'Car successfully created' });
   } catch (err) {
-    res.json({ success: false, message: err, data: null })
+    res.json({ success: false, message: err })
   }
 });
 
